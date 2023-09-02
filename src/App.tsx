@@ -1,5 +1,7 @@
+import { SearchBar } from "./components/SearchBar";
+
 function App() {
-  return <div>Hello, World</div>;
+  return <SearchBar />;
 }
 
 export default App;
