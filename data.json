@@ -1,0 +1,34 @@
+{
+  "data": [
+    {
+      "name": "John Doe",
+      "city": "New York",
+      "country": "United States",
+      "favoriteSport": "Basketball"
+    },
+    {
+      "name": "Alice Smith",
+      "city": "London",
+      "country": "United Kingdom",
+      "favoriteSport": "Soccer"
+    },
+    {
+      "name": "Miguel Rodriguez",
+      "city": "Madrid",
+      "country": "Spain",
+      "favoriteSport": "Tennis"
+    },
+    {
+      "name": "Emily Johnson",
+      "city": "Sydney",
+      "country": "Australia",
+      "favoriteSport": "Cricket"
+    },
+    {
+      "name": "Ahmed Ali",
+      "city": "Cairo",
+      "country": "Egypt",
+      "favoriteSport": "Table Tennis"
+    }
+  ]
+}

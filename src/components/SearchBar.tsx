@@ -1,20 +1,43 @@
-import { FormEvent } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { styled } from "styled-components";
+import { ComboBox } from "./ComboBox";
+
+import * as data from "../../data.json";
 
 export const SearchBar = () => {
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     console.log("Submitting...");
   };
 
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+
   return (
     <Form onSubmit={onSubmit}>
-      <Input type="search" placeholder="Type something" />
+      <InputWrapper>
+        <Input
+          type="text"
+          value={searchTerm}
+          placeholder="Type something"
+          onChange={handleInputChange}
+        />
+        <ComboBox searchTerm={searchTerm} items={data.data} />
+      </InputWrapper>
       <Button type="submit">Search</Button>
     </Form>
   );
 };
+
+const InputWrapper = styled.div`
+  width: 100%;
+  flex: 1;
+  position: relative;
+`;
 
 const Form = styled.form`
   display: flex;
@@ -25,7 +48,7 @@ const Form = styled.form`
 `;
 
 const Input = styled.input`
-  flex: 1;
+  width: 100%;
   height: 44px;
   border: 1px solid var(--background);
   border-radius: 6px;
