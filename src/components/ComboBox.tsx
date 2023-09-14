@@ -1,41 +1,36 @@
-import { useState, useEffect, useCallback } from "react";
 import { styled } from "styled-components";
-
-type Data = {
-  name: string;
-  city: string;
-  country: string;
-  favoriteSport: string;
-};
 
 type ComboBoxProps<T> = {
   searchTerm: string;
   items: T[];
 };
 
-export const ComboBox = <T extends Data>({
-  searchTerm,
-  items,
-}: ComboBoxProps<T>) => {
-  const [filteredList, setFilteredList] = useState<typeof items>([]);
+import { Data } from "../providers/SearchContext";
+import { useSearch } from "../hooks/useSearch";
 
-  const filterList = useCallback(() => {
-    const nextList = items.filter((item) =>
-      item.name.toLocaleLowerCase().includes(searchTerm)
-    );
-
-    setFilteredList(nextList);
-  }, [items, searchTerm]);
-
-  useEffect(() => {
-    filterList();
-  }, [filterList]);
+export const ComboBox = <T extends Data>({ searchTerm }: ComboBoxProps<T>) => {
+  const { results } = useSearch({ searchTerm });
 
   return (
     <ComboBoxContainer isVisible={!!searchTerm}>
-      {filteredList.map((item) => {
-        return <ComboBoxItem key={item.name}>{item.name}</ComboBoxItem>;
-      })}
+      {results.length ? (
+        results.map((item) => {
+          return (
+            <ComboBoxItem key={item.name}>
+              <strong>{item.name}</strong>
+              <div>
+                <span>
+                  {item.city}, {item.country}
+                </span>
+              </div>
+            </ComboBoxItem>
+          );
+        })
+      ) : (
+        <span>
+          <i>No matches found</i>
+        </span>
+      )}
     </ComboBoxContainer>
   );
 };
@@ -51,13 +46,20 @@ const ComboBoxContainer = styled.div<{ isVisible: boolean }>`
   background-color: var(--grey);
 `;
 
-const ComboBoxItem = styled.span`
+const ComboBoxItem = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
   padding: 0.2rem;
   line-height: 1.8;
   cursor: pointer;
   border-radius: 3px;
   transition: background-color 50ms ease-in;
+
+  span {
+    color: #444a;
+    font-size: 0.9rem;
+  }
 
   &:hover {
     background-color: var(--background);
